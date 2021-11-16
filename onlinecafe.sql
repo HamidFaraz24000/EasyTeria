@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 09, 2021 at 07:50 AM
+-- Generation Time: Nov 16, 2021 at 06:48 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.3.21
 
@@ -55,17 +55,9 @@ DROP TABLE IF EXISTS `admin_attendance`;
 CREATE TABLE IF NOT EXISTS `admin_attendance` (
   `Admin` varchar(15) NOT NULL,
   `Date` date NOT NULL,
-  `Login_Time` time NOT NULL,
-  `LogOut_Time` time NOT NULL,
+  `Status` enum('P','A') NOT NULL,
   PRIMARY KEY (`Admin`,`Date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `admin_attendance`
---
-
-INSERT INTO `admin_attendance` (`Admin`, `Date`, `Login_Time`, `LogOut_Time`) VALUES
-('MID@89PK', '2021-10-27', '08:39:34', '18:39:34');
 
 -- --------------------------------------------------------
 
@@ -86,6 +78,28 @@ CREATE TABLE IF NOT EXISTS `admin_designations` (
 INSERT INTO `admin_designations` (`Name`) VALUES
 ('Account Admin'),
 ('Head Admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_logins`
+--
+
+DROP TABLE IF EXISTS `admin_logins`;
+CREATE TABLE IF NOT EXISTS `admin_logins` (
+  `Admin` varchar(15) NOT NULL,
+  `Date` date NOT NULL,
+  `Login_Time` time NOT NULL,
+  `LogOut_Time` time NOT NULL,
+  PRIMARY KEY (`Admin`,`Date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `admin_logins`
+--
+
+INSERT INTO `admin_logins` (`Admin`, `Date`, `Login_Time`, `LogOut_Time`) VALUES
+('MID@89PK', '2021-10-27', '08:39:34', '18:39:34');
 
 -- --------------------------------------------------------
 
@@ -146,6 +160,12 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `admin_attendance`
   ADD CONSTRAINT `admin_attendance_ibfk_1` FOREIGN KEY (`Admin`) REFERENCES `admins` (`UserName`);
+
+--
+-- Constraints for table `admin_logins`
+--
+ALTER TABLE `admin_logins`
+  ADD CONSTRAINT `admin_logins_ibfk_1` FOREIGN KEY (`Admin`) REFERENCES `admins` (`UserName`);
 
 --
 -- Constraints for table `student_deposits`
