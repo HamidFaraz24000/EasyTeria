@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 16, 2021 at 06:48 AM
+-- Generation Time: Dec 06, 2021 at 07:22 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.3.21
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `onlinecafe`
+-- Database: `easyteria`
 --
 
 -- --------------------------------------------------------
@@ -136,13 +136,15 @@ INSERT INTO `student_accounts` (`Name`, `Reg_No`, `Section`, `Pin`, `ImageLoc`, 
 
 DROP TABLE IF EXISTS `student_deposits`;
 CREATE TABLE IF NOT EXISTS `student_deposits` (
-  `Student` varchar(10) NOT NULL,
+  `Student` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Date` date NOT NULL,
   `Deposit_Time` time NOT NULL,
   `Amount` int NOT NULL,
-  `into_bill` enum('Y','N') DEFAULT NULL,
+  `into_fees` enum('Y','N') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Ongoing_Session` varchar(9) NOT NULL,
-  PRIMARY KEY (`Student`,`Date`,`Deposit_Time`)
+  `Added_By` varchar(12) NOT NULL,
+  PRIMARY KEY (`Student`,`Date`,`Deposit_Time`),
+  KEY `Added_By` (`Added_By`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -171,7 +173,8 @@ ALTER TABLE `admin_logins`
 -- Constraints for table `student_deposits`
 --
 ALTER TABLE `student_deposits`
-  ADD CONSTRAINT `student_deposits_ibfk_1` FOREIGN KEY (`Student`) REFERENCES `student_accounts` (`Reg_No`);
+  ADD CONSTRAINT `student_deposits_ibfk_3` FOREIGN KEY (`Student`) REFERENCES `student_accounts` (`Reg_No`),
+  ADD CONSTRAINT `student_deposits_ibfk_4` FOREIGN KEY (`Added_By`) REFERENCES `admins` (`UserName`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
