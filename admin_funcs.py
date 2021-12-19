@@ -26,4 +26,4 @@ state = db.cursor()
 
 
 if __name__ == "__main__":
-    print(login("MID@89PK", "Tree456", "Cafe Admin"))
+    print(login("MID@89PK", "Tree456", "Head Admin"))
